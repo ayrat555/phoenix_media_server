@@ -6,14 +6,12 @@ defmodule MediaServer.FileRepoTest do
   @valid_attrs %{name: "best file", mime_type: "video/mp4", size: 600}
 
   test "sets uuid on file creation" do
-    changeset = File.changeset(%File{}, @valid_attrs)
-    {:ok, changeset} = Repo.insert(changeset)
+    {:ok, changeset} = create_file(@valid_attrs)
     assert changeset.uuid
   end
 
   test "sets extension on file creation" do
-    changeset = File.changeset(%File{}, @valid_attrs)
-    {:ok, _} = Repo.insert(changeset)
+    {:ok, _} = create_file(@valid_attrs)
     assert Repo.get_by!(File, @valid_attrs).extension == "mp4"
   end
 end

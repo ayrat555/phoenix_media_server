@@ -22,6 +22,7 @@ defmodule MediaServer.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import MediaServer.ModelCase
+      import MediaServer.TestHelpers
     end
   end
 

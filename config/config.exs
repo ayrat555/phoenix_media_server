@@ -7,7 +7,9 @@ use Mix.Config
 
 # General application configuration
 config :media_server,
-  ecto_repos: [MediaServer.Repo]
+  ecto_repos: [MediaServer.Repo],
+  part_size: 1024 * 1024 * 5,
+  max_parts_number: 10_000
 
 # Configures the endpoint
 config :media_server, MediaServer.Endpoint,

@@ -12,6 +12,8 @@ defmodule MediaServer.File do
     field :key, :string
     field :processed, :boolean, default: false
 
+    has_many :parts, MediaServer.File.Part
+
     timestamps()
   end
 
@@ -38,9 +40,9 @@ defmodule MediaServer.File do
       end
     end
 
-   defp extension(mime_type) do
-     mime_type
-     |> MIME.extensions
-     |> Enum.at(0)
-   end
+    defp extension(mime_type) do
+      mime_type
+      |> MIME.extensions
+      |> Enum.at(0)
+    end
 end
