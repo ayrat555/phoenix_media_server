@@ -13,7 +13,10 @@ config :media_server,
   sync_part_number: 10,
   riac_cs_key_id: "some_id",
   riac_cs_secret_key: "some_key",
-  riac_cs_exp_days: 1
+  riac_cs_exp_days: 1,
+  riak_cs_schema: "https",
+  riak_cs_host: "storage-nginx.stage.govermedia.com",
+  riak_cs_acl: "public-read"
 
 # Configures the endpoint
 config :media_server, MediaServer.Endpoint,

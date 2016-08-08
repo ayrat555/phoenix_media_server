@@ -1,24 +1,24 @@
-defmodule MediaServer.Infrastructure.RiakCs.SignerService do
-  import MediaServer.ServiceHelpers
+defmodule MediaServer.Infrastructure.RiakCs.Signer do
+  import MediaServer.Infrastructure.RiakCs.Params
 
-  def generate_signature_params(request_type, path, headers \\ %{}) do
+  def signature_params(path, request_type, headers \\ %{}) do
     exp_date = expiration_date()
     %{
-      AWSAccessKeyId: env_var(:riac_cs_key_id),
+      AWSAccessKeyId: key_id,
       Expires: exp_date,
       Signature: signature(request_type, exp_date, path, headers)
-    }
+      }
   end
 
     defp expiration_date do
       Timex.now
-      |> Timex.shift(days: env_var(:riac_cs_exp_days))
+      |> Timex.shift(days: expiration_days)
       |> Timex.to_unix()
     end
 
     defp signature(request_type, exp_date, path, headers) do
       string_to_sign = string_to_sign(request_type, exp_date, path, headers)
-      :crypto.hmac(:sha, env_var(:riac_cs_secret_key), string_to_sign)
+      :crypto.hmac(:sha, secret_key, string_to_sign)
       |> Base.encode64
     end
 
