@@ -9,7 +9,8 @@ use Mix.Config
 config :media_server,
   ecto_repos: [MediaServer.Repo],
   part_size: 1024 * 1024 * 5,
-  max_parts_number: 10_000
+  max_parts_number: 10_000,
+  sync_part_number: 10
 
 # Configures the endpoint
 config :media_server, MediaServer.Endpoint,

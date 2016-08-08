@@ -19,7 +19,7 @@ defmodule MediaServer.Mixfile do
   def application do
     [mod: {MediaServer, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :mime]]
+                    :phoenix_ecto, :postgrex, :mime, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +39,9 @@ defmodule MediaServer.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:mime, "~> 1.0"},
-     {:credo, "~> 0.4", only: [:dev, :test]}
+     {:credo, "~> 0.4", only: [:dev, :test]},
+     {:httpoison, "~> 0.9.0"},
+     {:benchfella, "~> 0.3.0"}
     ]
   end
 
