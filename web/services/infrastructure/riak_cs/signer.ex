@@ -23,7 +23,7 @@ defmodule MediaServer.Infrastructure.RiakCs.Signer do
     end
 
     defp string_to_sign(request_type, exp_date, path, headers) do
-      content_type = content_type(headers)
+      content_type = Map.get(headers, "Content-Type")
       headers = Map.delete(headers, "Content-Type")
       string_to_sign = ""
       string_to_sign = string_to_sign <> request_type <> "\n\n"
@@ -34,12 +34,5 @@ defmodule MediaServer.Infrastructure.RiakCs.Signer do
                                                               string_to_sign <> "#{key}:" <> value <> "\n"
                                                             end)
       string_to_sign <> path
-    end
-
-    defp content_type(headers) do
-      case Map.fetch(headers, "Content-Type") do
-        {:ok, value} -> value
-        :error -> nil
-      end
     end
 end
