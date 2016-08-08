@@ -17,7 +17,7 @@ defmodule MediaServer.Domain.FileService do
 
     defp insert_file_and_parts(file_changeset) do
       max_part_number = parts_number(file_changeset.changes.size)
-      sync_part_number = env_var(:sync_part_number)
+      sync_part_number = config(:sync_part_number)
       file = Repo.insert!(file_changeset)
       Repo.transaction(fn ->
         part_number_limit = if max_part_number > sync_part_number do
@@ -52,8 +52,8 @@ defmodule MediaServer.Domain.FileService do
     end
 
     defp part_size(size) do
-      max_parts_number = env_var(:max_parts_number)
-      min_part_size = env_var(:part_size)
+      max_parts_number = config(:max_parts_number)
+      min_part_size = config(:part_size)
       size
       |> Kernel./(max_parts_number)
       |> Float.ceil()
@@ -64,11 +64,15 @@ defmodule MediaServer.Domain.FileService do
     defp create_last_parts_async(file, max_part_number) do
       Task.start_link(fn ->
         Repo.transaction(fn ->
-          sync_part_number = env_var(:sync_part_number)
+          sync_part_number = config(:sync_part_number)
           file
           |> create_parts(sync_part_number + 1, max_part_number)
           |> Enum.each(&Repo.insert!(&1))
         end)
       end)
+    end
+
+    defp config(key) do
+      env_var(:file)[key]
     end
 end

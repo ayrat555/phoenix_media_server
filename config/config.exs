@@ -8,15 +8,15 @@ use Mix.Config
 # General application configuration
 config :media_server,
   ecto_repos: [MediaServer.Repo],
-  part_size: 1024 * 1024 * 5,
-  max_parts_number: 10_000,
-  sync_part_number: 10,
-  riac_cs_key_id: "some_id",
-  riac_cs_secret_key: "some_key",
-  riac_cs_exp_days: 1,
-  riak_cs_schema: "https",
-  riak_cs_host: "storage-nginx.stage.govermedia.com",
-  riak_cs_acl: "public-read"
+  file: [part_size: 1024 * 1024 * 5,
+         max_parts_number: 10_000,
+         sync_part_number: 10],
+  riak_cs: [key_id: "key",
+            secret_key: "secret",
+            exp_days: 1,
+            schema: "https",
+            host: "storage-nginx.stage.govermedia.com",
+            acl: "public-read"]
 
 # Configures the endpoint
 config :media_server, MediaServer.Endpoint,

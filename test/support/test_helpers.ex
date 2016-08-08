@@ -8,6 +8,6 @@ defmodule MediaServer.TestHelpers do
   end
 
   def min_part_size() do
-    Application.fetch_env!(:media_server, :part_size)
+    Application.fetch_env!(:media_server, :file)[:part_size]
   end
 end
